@@ -1,0 +1,99 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "eBiopacking",
+		"author": "wp-playground-share"
+	},
+	"landingPage": "/",
+	"login": true,
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "7.1"
+	},
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "setSiteLanguage",
+			"language": "es_ES"
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "eBiopacking",
+				"blogdescription": "",
+				"permalink_structure": "/%postname%/",
+				"date_format": "F j, Y",
+				"gmt_offset": "0"
+			}
+		},
+		{
+			"step": "installTheme",
+			"themeData": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/mager19/ebiopacking-playground/main/theme-ebiopacking.zip"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "ebiopacking"
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/mager19/ebiopacking-playground/main/plugin-ebio-core.zip"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "ebio-core",
+				"onError": "skip-plugin"
+			}
+		},
+		{
+			"step": "unzip",
+			"zipFile": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/mager19/ebiopacking-playground/main/uploads-1.zip"
+			},
+			"extractToPath": "/wordpress/wp-content/uploads"
+		},
+		{
+			"step": "mkdir",
+			"path": "/wordpress/wp-content/mu-plugins"
+		},
+		{
+			"step": "writeFile",
+			"path": "/wordpress/wp-content/mu-plugins/wp-playground-share.php",
+			"data": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/mager19/ebiopacking-playground/main/mu-plugin.php"
+			}
+		},
+		{
+			"step": "mkdir",
+			"path": "/tmp/wps"
+		},
+		{
+			"step": "writeFile",
+			"path": "/tmp/wps/content.json",
+			"data": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/mager19/ebiopacking-playground/main/content.json"
+			}
+		},
+		{
+			"step": "writeFile",
+			"path": "/tmp/wps/import.php",
+			"data": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/mager19/ebiopacking-playground/main/import.php"
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/tmp/wps/import.php';"
+		}
+	]
+}
